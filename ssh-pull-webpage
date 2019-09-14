@@ -1,0 +1,31 @@
+#!/bin/bash
+###############################################
+# SSH Webpage Forwarder                       #
+#                                             #
+# This script will prompt the user for        #
+# all the necessary information to forward    #
+# a webpage through ssh.                      #
+#                                             #
+# Written by: Todd Murphy                     #
+###############################################
+
+printf "Enter the the user & host (ex user@127.0.0.1): "
+read userAndHost
+
+printf "Enter the url for the webpage followed by the port (ex. 127.0.0.1:15672): "
+read webpage
+
+printf "Enter the local port to connect to on your machine: "
+read localPort
+
+printf "SSH through a specific port? (y/n): "
+read answer
+
+if [ "$answer" != 'n' ]
+then
+  printf "What port?: "
+  read sshPort
+  `ssh -p "$sshPort" "$userAndHost" -L "$localPort":"$webpage" -N`
+else
+  `ssh "$userAndHost" -L "$localPort":"$webpage" -N`
+fi
