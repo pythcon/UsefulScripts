@@ -1,0 +1,24 @@
+#!/bin/bash
+###############################################
+# Encrypt File Script                         #
+#                                             #
+# Usage: encrypt_file <file>                  #
+#                                             #
+# This script will decrypt a file with        #
+# aes-256-cbc.                                #
+#                                             #
+# Written by: Todd Murphy                     #
+###############################################
+
+if [[ $# -ne 1 ]] ; then
+    echo 'Usage: decrypt_file <file>'
+    exit 0
+fi
+
+printf "Enter the name of the output file: "
+read outputFile
+
+filePath="$1"
+DIR=$(dirname "${filePath}")
+
+`openssl enc -aes-256-cbc -d -in "$1" -out "$DIR"/"$outputFile"`
